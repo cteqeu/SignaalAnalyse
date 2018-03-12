@@ -1,0 +1,15 @@
+--cpu=Cortex-M4.fp
+".\obj\main.o"
+".\obj\audio.o"
+".\obj\delay.o"
+".\obj\gpio.o"
+".\obj\i2c.o"
+".\obj\i2s.o"
+".\obj\dstc.o"
+"C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Lib\ARM\arm_cortexM4lf_math.lib"
+".\obj\startup_s6e2cc.o"
+".\obj\system_s6e2cc.o"
+--strict --scatter ".\obj\DSP_LiB.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\lst\DSP_LiB.map" -o .\obj\DSP_LiB.axf

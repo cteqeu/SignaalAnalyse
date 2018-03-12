@@ -1,0 +1,15 @@
+.\obj\bt.o: drivers\bt.c
+.\obj\bt.o: drivers\bt.h
+.\obj\bt.o: .\RTE\Device\S6E2CCAJ0A\s6e2cc.h
+.\obj\bt.o: C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\mcu.h
+.\obj\bt.o: .\RTE\Device\S6E2CCAJ0A\system_s6e2cc.h
+.\obj\bt.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\obj\bt.o: C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\interrupt_type.h
+.\obj\bt.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\core_cm4.h
+.\obj\bt.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_version.h
+.\obj\bt.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_compiler.h
+.\obj\bt.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_armcc.h
+.\obj\bt.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\mpu_armv7.h
+.\obj\bt.o: drivers\platform.h
+.\obj\bt.o: C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\base_types.h
+.\obj\bt.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h

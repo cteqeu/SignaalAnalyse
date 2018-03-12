@@ -1,0 +1,130 @@
+Dependencies for Project 'DSP_LiB', Target 'S6E2CC': (DO NOT MODIFY !)
+F (.\src\loop_intr.c)(0x5AA07EF0)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork -I .\drivers -I .\RTE\Device\S6E2CCAJ0A-I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_S6E2CC-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC-D__UVISION_VERSION="524" -D_RTE_ -DS6E2CCAJ0A-o .\obj\loop_intr.o --omf_browse .\obj\loop_intr.crf --depend .\obj\loop_intr.d)
+I (.\drivers\audio.h)(0x55CDA604)
+I (.\RTE\Device\S6E2CCAJ0A\s6e2cc.h)(0x55C9D70A)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\mcu.h)(0x5460864E)
+I (.\RTE\Device\S6E2CCAJ0A\system_s6e2cc.h)(0x5460783E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BE5B4)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\interrupt_type.h)(0x5460864E)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\core_cm4.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_version.h)(0x5A55F852)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_compiler.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_armcc.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\mpu_armv7.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\arm_math.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x588BE5B4)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x588BE5B4)
+I (.\drivers\delay.h)(0x54380D66)
+I (.\drivers\gpio.h)(0x55953A7C)
+I (.\drivers\platform.h)(0x55CDF79C)
+I (.\drivers\i2c.h)(0x55C4DF36)
+I (.\drivers\i2s.h)(0x55CCBFB6)
+I (.\drivers\dstc.h)(0x55D4B329)
+F (.\drivers\audio.c)(0x55CDA58A)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork -I .\drivers -I .\RTE\Device\S6E2CCAJ0A-I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_S6E2CC-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC-D__UVISION_VERSION="524" -D_RTE_ -DS6E2CCAJ0A-o .\obj\audio.o --omf_browse .\obj\audio.crf --depend .\obj\audio.d)
+I (.\RTE\Device\S6E2CCAJ0A\s6e2cc.h)(0x55C9D70A)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\mcu.h)(0x5460864E)
+I (.\RTE\Device\S6E2CCAJ0A\system_s6e2cc.h)(0x5460783E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BE5B4)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\interrupt_type.h)(0x5460864E)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\core_cm4.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_version.h)(0x5A55F852)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_compiler.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_armcc.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\mpu_armv7.h)(0x5A8E8252)
+I (.\drivers\gpio.h)(0x55953A7C)
+I (.\drivers\platform.h)(0x55CDF79C)
+I (.\drivers\delay.h)(0x54380D66)
+I (drivers\i2c.h)(0x55C4DF36)
+I (drivers\i2s.h)(0x55CCBFB6)
+I (drivers\audio.h)(0x55CDA604)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\arm_math.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x588BE5B4)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x588BE5B4)
+I (drivers\dstc.h)(0x55D4B329)
+F (.\drivers\delay.c)(0x55B10436)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork -I .\drivers -I .\RTE\Device\S6E2CCAJ0A-I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_S6E2CC-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC-D__UVISION_VERSION="524" -D_RTE_ -DS6E2CCAJ0A-o .\obj\delay.o --omf_browse .\obj\delay.crf --depend .\obj\delay.d)
+I (.\drivers\platform.h)(0x55CDF79C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BE5B4)
+I (drivers\delay.h)(0x54380D66)
+F (.\drivers\gpio.c)(0x55CDA634)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork -I .\drivers -I .\RTE\Device\S6E2CCAJ0A-I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_S6E2CC-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC-D__UVISION_VERSION="524" -D_RTE_ -DS6E2CCAJ0A-o .\obj\gpio.o --omf_browse .\obj\gpio.crf --depend .\obj\gpio.d)
+I (.\RTE\Device\S6E2CCAJ0A\s6e2cc.h)(0x55C9D70A)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\mcu.h)(0x5460864E)
+I (.\RTE\Device\S6E2CCAJ0A\system_s6e2cc.h)(0x5460783E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BE5B4)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\interrupt_type.h)(0x5460864E)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\core_cm4.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_version.h)(0x5A55F852)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_compiler.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_armcc.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\mpu_armv7.h)(0x5A8E8252)
+I (drivers\platform.h)(0x55CDF79C)
+I (drivers\gpio.h)(0x55953A7C)
+F (.\drivers\i2c.c)(0x55CDA660)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork -I .\drivers -I .\RTE\Device\S6E2CCAJ0A-I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_S6E2CC-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC-D__UVISION_VERSION="524" -D_RTE_ -DS6E2CCAJ0A-o .\obj\i2c.o --omf_browse .\obj\i2c.crf --depend .\obj\i2c.d)
+I (.\RTE\Device\S6E2CCAJ0A\s6e2cc.h)(0x55C9D70A)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\mcu.h)(0x5460864E)
+I (.\RTE\Device\S6E2CCAJ0A\system_s6e2cc.h)(0x5460783E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BE5B4)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\interrupt_type.h)(0x5460864E)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\core_cm4.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_version.h)(0x5A55F852)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_compiler.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_armcc.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\mpu_armv7.h)(0x5A8E8252)
+I (drivers\platform.h)(0x55CDF79C)
+I (drivers\i2c.h)(0x55C4DF36)
+I (drivers\delay.h)(0x54380D66)
+F (.\drivers\i2s.c)(0x55CDF87A)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork -I .\drivers -I .\RTE\Device\S6E2CCAJ0A-I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_S6E2CC-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC-D__UVISION_VERSION="524" -D_RTE_ -DS6E2CCAJ0A-o .\obj\i2s.o --omf_browse .\obj\i2s.crf --depend .\obj\i2s.d)
+I (.\RTE\Device\S6E2CCAJ0A\s6e2cc.h)(0x55C9D70A)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\mcu.h)(0x5460864E)
+I (.\RTE\Device\S6E2CCAJ0A\system_s6e2cc.h)(0x5460783E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BE5B4)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\interrupt_type.h)(0x5460864E)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\core_cm4.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_version.h)(0x5A55F852)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_compiler.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_armcc.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\mpu_armv7.h)(0x5A8E8252)
+I (drivers\platform.h)(0x55CDF79C)
+I (drivers\i2s.h)(0x55CCBFB6)
+I (drivers\audio.h)(0x55CDA604)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\arm_math.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x588BE5B4)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x588BE5B4)
+I (drivers\delay.h)(0x54380D66)
+I (drivers\gpio.h)(0x55953A7C)
+I (drivers\i2c.h)(0x55C4DF36)
+I (drivers\dstc.h)(0x55D4B329)
+F (.\drivers\dstc.c)(0x55CDF684)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork -I .\drivers -I .\RTE\Device\S6E2CCAJ0A-I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_S6E2CC-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC-D__UVISION_VERSION="524" -D_RTE_ -DS6E2CCAJ0A-o .\obj\dstc.o --omf_browse .\obj\dstc.crf --depend .\obj\dstc.d)
+I (.\RTE\Device\S6E2CCAJ0A\s6e2cc.h)(0x55C9D70A)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\mcu.h)(0x5460864E)
+I (.\RTE\Device\S6E2CCAJ0A\system_s6e2cc.h)(0x5460783E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BE5B4)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\interrupt_type.h)(0x5460864E)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\core_cm4.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_version.h)(0x5A55F852)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_compiler.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_armcc.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\mpu_armv7.h)(0x5A8E8252)
+I (drivers\platform.h)(0x55CDF79C)
+I (drivers\dstc.h)(0x55D4B329)
+I (drivers\audio.h)(0x55CDA604)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\arm_math.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x588BE5B4)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x588BE5B4)
+I (drivers\delay.h)(0x54380D66)
+I (drivers\gpio.h)(0x55953A7C)
+I (drivers\i2c.h)(0x55C4DF36)
+I (drivers\i2s.h)(0x55CCBFB6)
+F (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Lib\ARM\arm_cortexM4lf_math.lib)(0x5A607B98)()
+F (RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s)(0x55C9DEC4)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_S6E2CC-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC--pd "__UVISION_VERSION SETA 524" --pd "_RTE_ SETA 1" --pd "S6E2CCAJ0A SETA 1"--list .\lst\startup_s6e2cc.lst --xref -o .\obj\startup_s6e2cc.o --depend .\obj\startup_s6e2cc.d)
+F (RTE\Device\S6E2CCAJ0A\system_s6e2cc.c)(0x55C9D978)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork -I .\drivers -I .\RTE\Device\S6E2CCAJ0A-I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_S6E2CC-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC-D__UVISION_VERSION="524" -D_RTE_ -DS6E2CCAJ0A-o .\obj\system_s6e2cc.o --omf_browse .\obj\system_s6e2cc.crf --depend .\obj\system_s6e2cc.d)
+I (RTE\Device\S6E2CCAJ0A\s6e2cc.h)(0x55C9D70A)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\mcu.h)(0x5460864E)
+I (.\RTE\Device\S6E2CCAJ0A\system_s6e2cc.h)(0x5460783E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BE5B4)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\interrupt_type.h)(0x5460864E)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\core_cm4.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_version.h)(0x5A55F852)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_compiler.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\cmsis_armcc.h)(0x5A8E8252)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\mpu_armv7.h)(0x5A8E8252)
+F (RTE\Device\S6E2CCAJ0A\system_s6e2cc.h)(0x5460783E)()

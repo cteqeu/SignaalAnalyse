@@ -1,0 +1,2435 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;*******************************************************
+                       ************************
+    2 00000000         ; Copyright (C) 2014 Spansion LLC. All Rights Reserved. 
+                       
+    3 00000000         ;
+    4 00000000         ; This software is owned and published by: 
+    5 00000000         ; Spansion LLC, 915 DeGuigne Dr. Sunnyvale, CA  94088-34
+                       53 ("Spansion").
+    6 00000000         ;
+    7 00000000         ; BY DOWNLOADING, INSTALLING OR USING THIS SOFTWARE, YOU
+                        AGREE TO BE BOUND 
+    8 00000000         ; BY ALL THE TERMS AND CONDITIONS OF THIS AGREEMENT.
+    9 00000000         ;
+   10 00000000         ; This software contains source code for use with Spansi
+                       on 
+   11 00000000         ; components. This software is licensed by Spansion to b
+                       e adapted only 
+   12 00000000         ; for use in systems utilizing Spansion components. Span
+                       sion shall not be 
+   13 00000000         ; responsible for misuse or illegal use of this software
+                        for devices not 
+   14 00000000         ; supported herein.  Spansion is providing this software
+                        "AS IS" and will 
+   15 00000000         ; not be responsible for issues arising from incorrect u
+                       ser implementation 
+   16 00000000         ; of the software.  
+   17 00000000         ;
+   18 00000000         ; SPANSION MAKES NO WARRANTY, EXPRESS OR IMPLIED, ARISIN
+                       G BY LAW OR OTHERWISE,
+   19 00000000         ; REGARDING THE SOFTWARE (INCLUDING ANY ACOOMPANYING WRI
+                       TTEN MATERIALS), 
+   20 00000000         ; ITS PERFORMANCE OR SUITABILITY FOR YOUR INTENDED USE, 
+                       INCLUDING, 
+   21 00000000         ; WITHOUT LIMITATION, THE IMPLIED WARRANTY OF MERCHANTAB
+                       ILITY, THE IMPLIED 
+   22 00000000         ; WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE OR USE, A
+                       ND THE IMPLIED 
+   23 00000000         ; WARRANTY OF NONINFRINGEMENT.  
+   24 00000000         ; SPANSION SHALL HAVE NO LIABILITY (WHETHER IN CONTRACT,
+                        WARRANTY, TORT, 
+   25 00000000         ; NEGLIGENCE OR OTHERWISE) FOR ANY DAMAGES WHATSOEVER (I
+                       NCLUDING, WITHOUT 
+   26 00000000         ; LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSI
+                       NESS INTERRUPTION, 
+   27 00000000         ; LOSS OF BUSINESS INFORMATION, OR OTHER PECUNIARY LOSS)
+                        ARISING FROM USE OR 
+   28 00000000         ; INABILITY TO USE THE SOFTWARE, INCLUDING, WITHOUT LIMI
+                       TATION, ANY DIRECT, 
+   29 00000000         ; INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES
+                        OR LOSS OF DATA, 
+   30 00000000         ; SAVINGS OR PROFITS, 
+   31 00000000         ; EVEN IF SPANSION HAS BEEN ADVISED OF THE POSSIBILITY O
+                       F SUCH DAMAGES. 
+   32 00000000         ; YOU ASSUME ALL RESPONSIBILITIES FOR SELECTION OF THE S
+                       OFTWARE TO ACHIEVE YOUR
+   33 00000000         ; INTENDED RESULTS, AND FOR THE INSTALLATION OF, USE OF,
+                        AND RESULTS OBTAINED 
+   34 00000000         ; FROM, THE SOFTWARE.  
+   35 00000000         ;
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   36 00000000         ; This software may be replicated in part or whole for t
+                       he licensed use, 
+   37 00000000         ; with the restriction that this Disclaimer and Copyrigh
+                       t notice must be 
+   38 00000000         ; included with each copy of this software, whether used
+                        in part or whole, 
+   39 00000000         ; at all times.  
+   40 00000000         ;
+   41 00000000         
+   42 00000000         ; Stack Configuration
+   43 00000000         ;  Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+   44 00000000         
+   45 00000000 00000200 
+                       Stack_Size
+                               EQU              0x00000200
+   46 00000000         
+   47 00000000                 AREA             STACK, NOINIT, READWRITE, ALIGN
+=3
+   48 00000000         Stack_Mem
+                               SPACE            Stack_Size
+   49 00000200         __initial_sp
+   50 00000200         
+   51 00000200         
+   52 00000200         ; Heap Configuration
+   53 00000200         ;  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+   54 00000200         
+   55 00000200 00000000 
+                       Heap_Size
+                               EQU              0x00000000
+   56 00000200         
+   57 00000200                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
+3
+   58 00000000         __heap_base
+   59 00000000         Heap_Mem
+                               SPACE            Heap_Size
+   60 00000000         __heap_limit
+   61 00000000         
+   62 00000000         
+   63 00000000                 PRESERVE8
+   64 00000000                 THUMB
+   65 00000000         
+   66 00000000         
+   67 00000000         ; Vector Table Mapped to Address 0 at Reset
+   68 00000000         
+   69 00000000                 AREA             RESET, DATA, READONLY
+   70 00000000                 EXPORT           __Vectors
+   71 00000000                 EXPORT           __Vectors_End
+   72 00000000                 EXPORT           __Vectors_Size
+   73 00000000         
+   74 00000000 00000000 
+                       __Vectors
+                               DCD              __initial_sp ; Top of Stack
+   75 00000004 00000000        DCD              Reset_Handler ; Reset Handler
+   76 00000008 00000000        DCD              NMI_Handler ; NMI Handler
+   77 0000000C 00000000        DCD              HardFault_Handler ; Hard Fault 
+                                                            Handler
+   78 00000010 00000000        DCD              MemManage_Handler 
+                                                            ; MPU Fault Handler
+                                                            
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+   79 00000014 00000000        DCD              BusFault_Handler 
+                                                            ; Bus Fault Handler
+                                                            
+   80 00000018 00000000        DCD              UsageFault_Handler ; Usage Faul
+                                                            t Handler
+   81 0000001C 00000000        DCD              0           ; Reserved
+   82 00000020 00000000        DCD              0           ; Reserved
+   83 00000024 00000000        DCD              0           ; Reserved
+   84 00000028 00000000        DCD              0           ; Reserved
+   85 0000002C 00000000        DCD              SVC_Handler ; SVCall Handler
+   86 00000030 00000000        DCD              DebugMon_Handler ; Debug Monito
+                                                            r Handler
+   87 00000034 00000000        DCD              0           ; Reserved
+   88 00000038 00000000        DCD              PendSV_Handler ; PendSV Handler
+                                                            
+   89 0000003C 00000000        DCD              SysTick_Handler 
+                                                            ; SysTick Handler
+   90 00000040         
+   91 00000040         ; Numbered IRQ handler vectors    
+   92 00000040         
+   93 00000040         ; Note: renaming to device dependent ISR function names 
+                       are done in
+   94 00000040         ;       pdl.h (section "IRQ name definition for all type
+                        MCUs"
+   95 00000040         
+   96 00000040 00000000        DCD              CSV_IRQHandler
+   97 00000044 00000000        DCD              SWDT_IRQHandler
+   98 00000048 00000000        DCD              LVD_IRQHandler
+   99 0000004C 00000000        DCD              IRQ003SEL_IRQHandler
+  100 00000050 00000000        DCD              IRQ004SEL_IRQHandler
+  101 00000054 00000000        DCD              IRQ005SEL_IRQHandler
+  102 00000058 00000000        DCD              IRQ006SEL_IRQHandler
+  103 0000005C 00000000        DCD              IRQ007SEL_IRQHandler
+  104 00000060 00000000        DCD              IRQ008SEL_IRQHandler
+  105 00000064 00000000        DCD              IRQ009SEL_IRQHandler
+  106 00000068 00000000        DCD              IRQ010SEL_IRQHandler
+  107 0000006C 00000000        DCD              EXINT0_IRQHandler
+  108 00000070 00000000        DCD              EXINT1_IRQHandler
+  109 00000074 00000000        DCD              EXINT2_IRQHandler
+  110 00000078 00000000        DCD              EXINT3_IRQHandler
+  111 0000007C 00000000        DCD              EXINT4_IRQHandler
+  112 00000080 00000000        DCD              EXINT5_IRQHandler
+  113 00000084 00000000        DCD              EXINT6_IRQHandler
+  114 00000088 00000000        DCD              EXINT7_IRQHandler
+  115 0000008C 00000000        DCD              QPRC0_IRQHandler
+  116 00000090 00000000        DCD              QPRC1_IRQHandler
+  117 00000094 00000000        DCD              WFG0_DTIF0_IRQHandler
+  118 00000098 00000000        DCD              WFG1_DTIF1_IRQHandler
+  119 0000009C 00000000        DCD              WFG2_DTIF2_IRQHandler
+  120 000000A0 00000000        DCD              FRT0_PEAK_IRQHandler
+  121 000000A4 00000000        DCD              FRT0_ZERO_IRQHandler
+  122 000000A8 00000000        DCD              ICU0_IRQHandler
+  123 000000AC 00000000        DCD              OCU0_IRQHandler
+  124 000000B0 00000000        DCD              FRT1_PEAK_IRQHandler
+  125 000000B4 00000000        DCD              FRT1_ZERO_IRQHandler
+  126 000000B8 00000000        DCD              ICU1_IRQHandler
+  127 000000BC 00000000        DCD              OCU1_IRQHandler
+  128 000000C0 00000000        DCD              FRT2_PEAK_IRQHandler
+  129 000000C4 00000000        DCD              FRT2_ZERO_IRQHandler
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+  130 000000C8 00000000        DCD              ICU2_IRQHandler
+  131 000000CC 00000000        DCD              OCU2_IRQHandler
+  132 000000D0 00000000        DCD              PPG00_02_04_IRQHandler
+  133 000000D4 00000000        DCD              PPG08_10_12_IRQHandler
+  134 000000D8 00000000        DCD              PPG16_18_20_IRQHandler
+  135 000000DC 00000000        DCD              BT0_IRQHandler
+  136 000000E0 00000000        DCD              BT1_IRQHandler
+  137 000000E4 00000000        DCD              BT2_IRQHandler
+  138 000000E8 00000000        DCD              BT3_IRQHandler
+  139 000000EC 00000000        DCD              BT4_IRQHandler
+  140 000000F0 00000000        DCD              BT5_IRQHandler
+  141 000000F4 00000000        DCD              BT6_IRQHandler
+  142 000000F8 00000000        DCD              BT7_IRQHandler
+  143 000000FC 00000000        DCD              DT1_2_IRAHandler
+  144 00000100 00000000        DCD              WC_IRQHandler
+  145 00000104 00000000        DCD              EXTBUS_ERR_Handler
+  146 00000108 00000000        DCD              RTC_IRQHandler
+  147 0000010C 00000000        DCD              EXTINT8_IRQHandler
+  148 00000110 00000000        DCD              EXTINT9_IRQHandler
+  149 00000114 00000000        DCD              EXTINT10_IRQHandler
+  150 00000118 00000000        DCD              EXTINT11_IRQHandler
+  151 0000011C 00000000        DCD              EXTINT12_IRQHandler
+  152 00000120 00000000        DCD              EXTINT13_IRQHandler
+  153 00000124 00000000        DCD              EXTINT14_IRQHandler
+  154 00000128 00000000        DCD              EXTINT15_IRQHandler
+  155 0000012C 00000000        DCD              TIM_IRQHandler
+  156 00000130 00000000        DCD              MFS0_RX_IRQHandler
+  157 00000134 00000000        DCD              MFS0_TX_IRQHandler
+  158 00000138 00000000        DCD              MFS1_RX_IRQHandler
+  159 0000013C 00000000        DCD              MFS1_TX_IRQHandler
+  160 00000140 00000000        DCD              MFS2_RX_IRQHandler
+  161 00000144 00000000        DCD              MFS2_TX_IRQHandler
+  162 00000148 00000000        DCD              MFS3_RX_IRQHandler
+  163 0000014C 00000000        DCD              MFS3_TX_IRQHandler
+  164 00000150 00000000        DCD              MFS4_RX_IRQHandler
+  165 00000154 00000000        DCD              MFS4_TX_IRQHandler
+  166 00000158 00000000        DCD              MFS5_RX_IRQHandler
+  167 0000015C 00000000        DCD              MFS5_TX_IRQHandler
+  168 00000160 00000000        DCD              MFS6_RX_IRQHandler
+  169 00000164 00000000        DCD              MFS6_TX_IRQHandler
+  170 00000168 00000000        DCD              MFS7_RX_IRQHandler
+  171 0000016C 00000000        DCD              MFS7_TX_IRQHandler
+  172 00000170 00000000        DCD              ADC0_IRQHandler
+  173 00000174 00000000        DCD              ADC1_IRQHandler
+  174 00000178 00000000        DCD              USB0_IRQHandler
+  175 0000017C 00000000        DCD              USB0_HOST_IRQHandler
+  176 00000180 00000000        DCD              CAN0_IRQHandler
+  177 00000184 00000000        DCD              CAN1_CANFD_IRQHandler
+  178 00000188 00000000        DCD              ETHER0_IRQHandler
+  179 0000018C 00000000        DCD              DMAC0_IRQHandler
+  180 00000190 00000000        DCD              DMAC1_IRQHandler
+  181 00000194 00000000        DCD              DMAC2_IRQHandler
+  182 00000198 00000000        DCD              DMAC3_IRQHandler
+  183 0000019C 00000000        DCD              DMAC4_IRQHandler
+  184 000001A0 00000000        DCD              DMAC5_IRQHandler
+  185 000001A4 00000000        DCD              DMAC6_IRQHandler
+  186 000001A8 00000000        DCD              DMAC7_IRQHandler
+  187 000001AC 00000000        DCD              DSTC_IRQHandler
+  188 000001B0 00000000        DCD              EXINT16_17_18_19_IRQHandler
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+  189 000001B4 00000000        DCD              EXINT20_21_22_23_IRQHandler
+  190 000001B8 00000000        DCD              EXINT24_25_26_27_IRQHandler
+  191 000001BC 00000000        DCD              EXINT28_29_30_31_IRQHandler
+  192 000001C0 00000000        DCD              QPRC2_IRQHandler
+  193 000001C4 00000000        DCD              QPRC3_IRQHandler
+  194 000001C8 00000000        DCD              BT8_IRQHandler
+  195 000001CC 00000000        DCD              BT9_IRQHandler
+  196 000001D0 00000000        DCD              BT10_IRQHandler
+  197 000001D4 00000000        DCD              BT11_IRQHandler
+  198 000001D8 00000000        DCD              BT12_15_IRQHandler
+  199 000001DC 00000000        DCD              MFS8_RX_IRQHandler
+  200 000001E0 00000000        DCD              MFS8_TX_IRQHandler
+  201 000001E4 00000000        DCD              MFS9_RX_IRQHandler
+  202 000001E8 00000000        DCD              MFS9_TX_IRQHandler
+  203 000001EC 00000000        DCD              MFS10_RX_IRQHandler
+  204 000001F0 00000000        DCD              MFS10_TX_IRQHandler
+  205 000001F4 00000000        DCD              MFS11_RX_IRQHandler
+  206 000001F8 00000000        DCD              MFS11_TX_IRQHandler
+  207 000001FC 00000000        DCD              ADC2_IRQHandler
+  208 00000200 00000000        DCD              DSTC_COMP_IRQHandler
+  209 00000204 00000000        DCD              USB1_HDMICEC0_IRQHandler
+  210 00000208 00000000        DCD              USB1_HOST_HDMICEC1_IRQHandler
+  211 0000020C 00000000        DCD              HSSPI_IRQHandler
+  212 00000210 00000000        DCD              Dummy
+  213 00000214 00000000        DCD              PRGCRC_I2S_IRQHandler
+  214 00000218 00000000        DCD              SD_IRQHandler
+  215 0000021C 00000000        DCD              FLASHIF_IRQHandler
+  216 00000220 00000000        DCD              MFS12_RX_IRQHandler
+  217 00000224 00000000        DCD              MFS12_TX_IRQHandler
+  218 00000228 00000000        DCD              MFS13_RX_IRQHandler
+  219 0000022C 00000000        DCD              MFS13_TX_IRQHandler
+  220 00000230 00000000        DCD              MFS14_RX_IRQHandler
+  221 00000234 00000000        DCD              MFS14_TX_IRQHandler
+  222 00000238 00000000        DCD              MFS15_RX_IRQHandler
+  223 0000023C 00000000        DCD              MFS15_TX_IRQHandler
+  224 00000240         __Vectors_End
+  225 00000240         
+  226 00000240 00000240 
+                       __Vectors_Size
+                               EQU              __Vectors_End - __Vectors
+  227 00000240         
+  228 00000240                 AREA             |.text|, CODE, READONLY
+  229 00000000         
+  230 00000000         
+  231 00000000         ; Reset Handler
+  232 00000000         
+  233 00000000         Reset_Handler
+                               PROC
+  234 00000000                 EXPORT           Reset_Handler             [WEAK
+]
+  235 00000000                 IMPORT           SystemInit
+  236 00000000                 IMPORT           __main
+  237 00000000         
+  238 00000000 F8DF 0030       LDR.W            R0, =0xE000ED88 ; CPACR is loca
+                                                            ted at address 0xE0
+                                                            00ED88
+  239 00000004 6801            LDR              R1, [R0]    ; Read CPACR
+  240 00000006 F441 0170       ORR              R1, R1, #(0xF << 20) ; Set bits
+                                                             20-23 to enable CP
+
+
+
+ARM Macro Assembler    Page 6 
+
+
+                                                            10 and CP11 coproce
+                                                            ssors
+  241 0000000A 6001            STR              R1, [R0]    ; Write back the mo
+                                                            dified value to the
+                                                             CPACR
+  242 0000000C         
+  243 0000000C 480A            LDR              R0, =SystemInit
+  244 0000000E 4780            BLX              R0
+  245 00000010 480A            LDR              R0, =__main
+  246 00000012 4700            BX               R0
+  247 00000014                 ENDP
+  248 00000014         
+  249 00000014         
+  250 00000014         ; Dummy Exception Handlers (infinite loops which can be 
+                       modified)
+  251 00000014         
+  252 00000014         NMI_Handler
+                               PROC
+  253 00000014                 EXPORT           NMI_Handler               [WEAK
+]
+  254 00000014 E7FE            B                .
+  255 00000016                 ENDP
+  257 00000016         HardFault_Handler
+                               PROC
+  258 00000016                 EXPORT           HardFault_Handler         [WEAK
+]
+  259 00000016 E7FE            B                .
+  260 00000018                 ENDP
+  262 00000018         MemManage_Handler
+                               PROC
+  263 00000018                 EXPORT           MemManage_Handler         [WEAK
+]
+  264 00000018 E7FE            B                .
+  265 0000001A                 ENDP
+  267 0000001A         BusFault_Handler
+                               PROC
+  268 0000001A                 EXPORT           BusFault_Handler          [WEAK
+]
+  269 0000001A E7FE            B                .
+  270 0000001C                 ENDP
+  272 0000001C         UsageFault_Handler
+                               PROC
+  273 0000001C                 EXPORT           UsageFault_Handler        [WEAK
+]
+  274 0000001C E7FE            B                .
+  275 0000001E                 ENDP
+  276 0000001E         SVC_Handler
+                               PROC
+  277 0000001E                 EXPORT           SVC_Handler               [WEAK
+]
+  278 0000001E E7FE            B                .
+  279 00000020                 ENDP
+  281 00000020         DebugMon_Handler
+                               PROC
+  282 00000020                 EXPORT           DebugMon_Handler          [WEAK
+]
+  283 00000020 E7FE            B                .
+  284 00000022                 ENDP
+  285 00000022         PendSV_Handler
+
+
+
+ARM Macro Assembler    Page 7 
+
+
+                               PROC
+  286 00000022                 EXPORT           PendSV_Handler            [WEAK
+]
+  287 00000022 E7FE            B                .
+  288 00000024                 ENDP
+  289 00000024         SysTick_Handler
+                               PROC
+  290 00000024                 EXPORT           SysTick_Handler           [WEAK
+]
+  291 00000024 E7FE            B                .
+  292 00000026                 ENDP
+  293 00000026         
+  294 00000026         Default_Handler
+                               PROC
+  295 00000026         
+  296 00000026                 EXPORT           CSV_IRQHandler           [WEAK]
+  297 00000026                 EXPORT           SWDT_IRQHandler           [WEAK
+]
+  298 00000026                 EXPORT           LVD_IRQHandler           [WEAK]
+  299 00000026                 EXPORT           IRQ003SEL_IRQHandler      [WEAK
+]
+  300 00000026                 EXPORT           IRQ004SEL_IRQHandler      [WEAK
+]
+  301 00000026                 EXPORT           IRQ005SEL_IRQHandler      [WEAK
+]
+  302 00000026                 EXPORT           IRQ006SEL_IRQHandler      [WEAK
+]
+  303 00000026                 EXPORT           IRQ007SEL_IRQHandler      [WEAK
+]
+  304 00000026                 EXPORT           IRQ008SEL_IRQHandler      [WEAK
+]
+  305 00000026                 EXPORT           IRQ009SEL_IRQHandler      [WEAK
+]
+  306 00000026                 EXPORT           IRQ010SEL_IRQHandler      [WEAK
+]
+  307 00000026                 EXPORT           EXINT0_IRQHandler         [WEAK
+]
+  308 00000026                 EXPORT           EXINT1_IRQHandler         [WEAK
+]
+  309 00000026                 EXPORT           EXINT2_IRQHandler         [WEAK
+]
+  310 00000026                 EXPORT           EXINT3_IRQHandler         [WEAK
+]
+  311 00000026                 EXPORT           EXINT4_IRQHandler         [WEAK
+]
+  312 00000026                 EXPORT           EXINT5_IRQHandler         [WEAK
+]
+  313 00000026                 EXPORT           EXINT6_IRQHandler         [WEAK
+]
+  314 00000026                 EXPORT           EXINT7_IRQHandler         [WEAK
+]
+  315 00000026                 EXPORT           QPRC0_IRQHandler          [WEAK
+]
+  316 00000026                 EXPORT           QPRC1_IRQHandler          [WEAK
+]
+  317 00000026                 EXPORT           WFG0_DTIF0_IRQHandler     [WEAK
+]
+  318 00000026                 EXPORT           WFG1_DTIF1_IRQHandler     [WEAK
+]
+
+
+
+ARM Macro Assembler    Page 8 
+
+
+  319 00000026                 EXPORT           WFG2_DTIF2_IRQHandler     [WEAK
+]
+  320 00000026                 EXPORT           FRT0_PEAK_IRQHandler      [WEAK
+]
+  321 00000026                 EXPORT           FRT0_ZERO_IRQHandler      [WEAK
+]
+  322 00000026                 EXPORT           ICU0_IRQHandler           [WEAK
+]
+  323 00000026                 EXPORT           OCU0_IRQHandler           [WEAK
+]
+  324 00000026                 EXPORT           FRT1_PEAK_IRQHandler      [WEAK
+]
+  325 00000026                 EXPORT           FRT1_ZERO_IRQHandler      [WEAK
+]
+  326 00000026                 EXPORT           ICU1_IRQHandler           [WEAK
+]
+  327 00000026                 EXPORT           OCU1_IRQHandler           [WEAK
+]
+  328 00000026                 EXPORT           FRT2_PEAK_IRQHandler      [WEAK
+]
+  329 00000026                 EXPORT           FRT2_ZERO_IRQHandler      [WEAK
+]
+  330 00000026                 EXPORT           ICU2_IRQHandler           [WEAK
+]
+  331 00000026                 EXPORT           OCU2_IRQHandler           [WEAK
+]
+  332 00000026                 EXPORT           PPG00_02_04_IRQHandler    [WEAK
+]
+  333 00000026                 EXPORT           PPG08_10_12_IRQHandler    [WEAK
+]
+  334 00000026                 EXPORT           PPG16_18_20_IRQHandler    [WEAK
+]
+  335 00000026                 EXPORT           BT0_IRQHandler           [WEAK]
+  336 00000026                 EXPORT           BT1_IRQHandler           [WEAK]
+  337 00000026                 EXPORT           BT2_IRQHandler           [WEAK]
+  338 00000026                 EXPORT           BT3_IRQHandler           [WEAK]
+  339 00000026                 EXPORT           BT4_IRQHandler           [WEAK]
+  340 00000026                 EXPORT           BT5_IRQHandler           [WEAK]
+  341 00000026                 EXPORT           BT6_IRQHandler           [WEAK]
+  342 00000026                 EXPORT           BT7_IRQHandler           [WEAK]
+  343 00000026                 EXPORT           DT1_2_IRAHandler          [WEAK
+]
+  344 00000026                 EXPORT           WC_IRQHandler           [WEAK]
+  345 00000026                 EXPORT           EXTBUS_ERR_Handler        [WEAK
+]
+  346 00000026                 EXPORT           RTC_IRQHandler           [WEAK]
+  347 00000026                 EXPORT           EXTINT8_IRQHandler        [WEAK
+]
+  348 00000026                 EXPORT           EXTINT9_IRQHandler        [WEAK
+]
+  349 00000026                 EXPORT           EXTINT10_IRQHandler       [WEAK
+]
+  350 00000026                 EXPORT           EXTINT11_IRQHandler       [WEAK
+]
+  351 00000026                 EXPORT           EXTINT12_IRQHandler       [WEAK
+]
+  352 00000026                 EXPORT           EXTINT13_IRQHandler       [WEAK
+]
+  353 00000026                 EXPORT           EXTINT14_IRQHandler       [WEAK
+
+
+
+ARM Macro Assembler    Page 9 
+
+
+]
+  354 00000026                 EXPORT           EXTINT15_IRQHandler       [WEAK
+]
+  355 00000026                 EXPORT           TIM_IRQHandler           [WEAK]
+  356 00000026                 EXPORT           MFS0_RX_IRQHandler        [WEAK
+]
+  357 00000026                 EXPORT           MFS0_TX_IRQHandler        [WEAK
+]
+  358 00000026                 EXPORT           MFS1_RX_IRQHandler        [WEAK
+]
+  359 00000026                 EXPORT           MFS1_TX_IRQHandler        [WEAK
+]
+  360 00000026                 EXPORT           MFS2_RX_IRQHandler        [WEAK
+]
+  361 00000026                 EXPORT           MFS2_TX_IRQHandler        [WEAK
+]
+  362 00000026                 EXPORT           MFS3_RX_IRQHandler        [WEAK
+]
+  363 00000026                 EXPORT           MFS3_TX_IRQHandler        [WEAK
+]
+  364 00000026                 EXPORT           MFS4_RX_IRQHandler        [WEAK
+]
+  365 00000026                 EXPORT           MFS4_TX_IRQHandler        [WEAK
+]
+  366 00000026                 EXPORT           MFS5_RX_IRQHandler        [WEAK
+]
+  367 00000026                 EXPORT           MFS5_TX_IRQHandler        [WEAK
+]
+  368 00000026                 EXPORT           MFS6_RX_IRQHandler        [WEAK
+]
+  369 00000026                 EXPORT           MFS6_TX_IRQHandler        [WEAK
+]
+  370 00000026                 EXPORT           MFS7_RX_IRQHandler        [WEAK
+]
+  371 00000026                 EXPORT           MFS7_TX_IRQHandler        [WEAK
+]
+  372 00000026                 EXPORT           ADC0_IRQHandler           [WEAK
+]
+  373 00000026                 EXPORT           ADC1_IRQHandler           [WEAK
+]
+  374 00000026                 EXPORT           USB0_IRQHandler           [WEAK
+]
+  375 00000026                 EXPORT           USB0_HOST_IRQHandler      [WEAK
+]
+  376 00000026                 EXPORT           CAN0_IRQHandler           [WEAK
+]
+  377 00000026                 EXPORT           CAN1_CANFD_IRQHandler     [WEAK
+]
+  378 00000026                 EXPORT           ETHER0_IRQHandler         [WEAK
+]
+  379 00000026                 EXPORT           DMAC0_IRQHandler          [WEAK
+]
+  380 00000026                 EXPORT           DMAC1_IRQHandler          [WEAK
+]
+  381 00000026                 EXPORT           DMAC2_IRQHandler          [WEAK
+]
+  382 00000026                 EXPORT           DMAC3_IRQHandler          [WEAK
+]
+  383 00000026                 EXPORT           DMAC4_IRQHandler          [WEAK
+
+
+
+ARM Macro Assembler    Page 10 
+
+
+]
+  384 00000026                 EXPORT           DMAC5_IRQHandler          [WEAK
+]
+  385 00000026                 EXPORT           DMAC6_IRQHandler          [WEAK
+]
+  386 00000026                 EXPORT           DMAC7_IRQHandler          [WEAK
+]
+  387 00000026                 EXPORT           DSTC_IRQHandler           [WEAK
+]
+  388 00000026                 EXPORT           EXINT16_17_18_19_IRQHandler [WE
+AK]
+  389 00000026                 EXPORT           EXINT20_21_22_23_IRQHandler [WE
+AK]
+  390 00000026                 EXPORT           EXINT24_25_26_27_IRQHandler [WE
+AK]
+  391 00000026                 EXPORT           EXINT28_29_30_31_IRQHandler [WE
+AK]
+  392 00000026                 EXPORT           QPRC2_IRQHandler          [WEAK
+]
+  393 00000026                 EXPORT           QPRC3_IRQHandler          [WEAK
+]
+  394 00000026                 EXPORT           BT8_IRQHandler           [WEAK]
+  395 00000026                 EXPORT           BT9_IRQHandler           [WEAK]
+  396 00000026                 EXPORT           BT10_IRQHandler           [WEAK
+]
+  397 00000026                 EXPORT           BT11_IRQHandler           [WEAK
+]
+  398 00000026                 EXPORT           BT12_15_IRQHandler        [WEAK
+]
+  399 00000026                 EXPORT           MFS8_RX_IRQHandler        [WEAK
+]
+  400 00000026                 EXPORT           MFS8_TX_IRQHandler        [WEAK
+]
+  401 00000026                 EXPORT           MFS9_RX_IRQHandler        [WEAK
+]
+  402 00000026                 EXPORT           MFS9_TX_IRQHandler        [WEAK
+]
+  403 00000026                 EXPORT           MFS10_RX_IRQHandler       [WEAK
+]
+  404 00000026                 EXPORT           MFS10_TX_IRQHandler       [WEAK
+]
+  405 00000026                 EXPORT           MFS11_RX_IRQHandler       [WEAK
+]
+  406 00000026                 EXPORT           MFS11_TX_IRQHandler       [WEAK
+]
+  407 00000026                 EXPORT           ADC2_IRQHandler           [WEAK
+]
+  408 00000026                 EXPORT           DSTC_COMP_IRQHandler      [WEAK
+]
+  409 00000026                 EXPORT           USB1_HDMICEC0_IRQHandler  [WEAK
+]
+  410 00000026                 EXPORT           USB1_HOST_HDMICEC1_IRQHandler [
+WEAK]
+  411 00000026                 EXPORT           HSSPI_IRQHandler          [WEAK
+]
+  412 00000026                 EXPORT           PRGCRC_I2S_IRQHandler     [WEAK
+]
+  413 00000026                 EXPORT           SD_IRQHandler           [WEAK]
+  414 00000026                 EXPORT           FLASHIF_IRQHandler        [WEAK
+
+
+
+ARM Macro Assembler    Page 11 
+
+
+]
+  415 00000026                 EXPORT           MFS12_RX_IRQHandler       [WEAK
+]
+  416 00000026                 EXPORT           MFS12_TX_IRQHandler       [WEAK
+]
+  417 00000026                 EXPORT           MFS13_RX_IRQHandler       [WEAK
+]
+  418 00000026                 EXPORT           MFS13_TX_IRQHandler       [WEAK
+]
+  419 00000026                 EXPORT           MFS14_RX_IRQHandler       [WEAK
+]
+  420 00000026                 EXPORT           MFS14_TX_IRQHandler       [WEAK
+]
+  421 00000026                 EXPORT           MFS15_RX_IRQHandler       [WEAK
+]
+  422 00000026                 EXPORT           MFS15_TX_IRQHandler       [WEAK
+]
+  423 00000026                 EXPORT           Dummy            [WEAK]
+  424 00000026         
+  425 00000026         
+  426 00000026         
+  427 00000026         CSV_IRQHandler
+  428 00000026         SWDT_IRQHandler
+  429 00000026         LVD_IRQHandler
+  430 00000026         IRQ003SEL_IRQHandler
+  431 00000026         IRQ004SEL_IRQHandler
+  432 00000026         IRQ005SEL_IRQHandler
+  433 00000026         IRQ006SEL_IRQHandler
+  434 00000026         IRQ007SEL_IRQHandler
+  435 00000026         IRQ008SEL_IRQHandler
+  436 00000026         IRQ009SEL_IRQHandler
+  437 00000026         IRQ010SEL_IRQHandler
+  438 00000026         EXINT0_IRQHandler
+  439 00000026         EXINT1_IRQHandler
+  440 00000026         EXINT2_IRQHandler
+  441 00000026         EXINT3_IRQHandler
+  442 00000026         EXINT4_IRQHandler
+  443 00000026         EXINT5_IRQHandler
+  444 00000026         EXINT6_IRQHandler
+  445 00000026         EXINT7_IRQHandler
+  446 00000026         QPRC0_IRQHandler
+  447 00000026         QPRC1_IRQHandler
+  448 00000026         WFG0_DTIF0_IRQHandler
+  449 00000026         WFG1_DTIF1_IRQHandler
+  450 00000026         WFG2_DTIF2_IRQHandler
+  451 00000026         FRT0_PEAK_IRQHandler
+  452 00000026         FRT0_ZERO_IRQHandler
+  453 00000026         ICU0_IRQHandler
+  454 00000026         OCU0_IRQHandler
+  455 00000026         FRT1_PEAK_IRQHandler
+  456 00000026         FRT1_ZERO_IRQHandler
+  457 00000026         ICU1_IRQHandler
+  458 00000026         OCU1_IRQHandler
+  459 00000026         FRT2_PEAK_IRQHandler
+  460 00000026         FRT2_ZERO_IRQHandler
+  461 00000026         ICU2_IRQHandler
+  462 00000026         OCU2_IRQHandler
+  463 00000026         PPG00_02_04_IRQHandler
+  464 00000026         PPG08_10_12_IRQHandler
+
+
+
+ARM Macro Assembler    Page 12 
+
+
+  465 00000026         PPG16_18_20_IRQHandler
+  466 00000026         BT0_IRQHandler
+  467 00000026         BT1_IRQHandler
+  468 00000026         BT2_IRQHandler
+  469 00000026         BT3_IRQHandler
+  470 00000026         BT4_IRQHandler
+  471 00000026         BT5_IRQHandler
+  472 00000026         BT6_IRQHandler
+  473 00000026         BT7_IRQHandler
+  474 00000026         DT1_2_IRAHandler
+  475 00000026         WC_IRQHandler
+  476 00000026         EXTBUS_ERR_Handler
+  477 00000026         RTC_IRQHandler
+  478 00000026         EXTINT8_IRQHandler
+  479 00000026         EXTINT9_IRQHandler
+  480 00000026         EXTINT10_IRQHandler
+  481 00000026         EXTINT11_IRQHandler
+  482 00000026         EXTINT12_IRQHandler
+  483 00000026         EXTINT13_IRQHandler
+  484 00000026         EXTINT14_IRQHandler
+  485 00000026         EXTINT15_IRQHandler
+  486 00000026         TIM_IRQHandler
+  487 00000026         MFS0_RX_IRQHandler
+  488 00000026         MFS0_TX_IRQHandler
+  489 00000026         MFS1_RX_IRQHandler
+  490 00000026         MFS1_TX_IRQHandler
+  491 00000026         MFS2_RX_IRQHandler
+  492 00000026         MFS2_TX_IRQHandler
+  493 00000026         MFS3_RX_IRQHandler
+  494 00000026         MFS3_TX_IRQHandler
+  495 00000026         MFS4_RX_IRQHandler
+  496 00000026         MFS4_TX_IRQHandler
+  497 00000026         MFS5_RX_IRQHandler
+  498 00000026         MFS5_TX_IRQHandler
+  499 00000026         MFS6_RX_IRQHandler
+  500 00000026         MFS6_TX_IRQHandler
+  501 00000026         MFS7_RX_IRQHandler
+  502 00000026         MFS7_TX_IRQHandler
+  503 00000026         ADC0_IRQHandler
+  504 00000026         ADC1_IRQHandler
+  505 00000026         USB0_IRQHandler
+  506 00000026         USB0_HOST_IRQHandler
+  507 00000026         CAN0_IRQHandler
+  508 00000026         CAN1_CANFD_IRQHandler
+  509 00000026         ETHER0_IRQHandler
+  510 00000026         DMAC0_IRQHandler
+  511 00000026         DMAC1_IRQHandler
+  512 00000026         DMAC2_IRQHandler
+  513 00000026         DMAC3_IRQHandler
+  514 00000026         DMAC4_IRQHandler
+  515 00000026         DMAC5_IRQHandler
+  516 00000026         DMAC6_IRQHandler
+  517 00000026         DMAC7_IRQHandler
+  518 00000026         DSTC_IRQHandler
+  519 00000026         EXINT16_17_18_19_IRQHandler
+  520 00000026         EXINT20_21_22_23_IRQHandler
+  521 00000026         EXINT24_25_26_27_IRQHandler
+  522 00000026         EXINT28_29_30_31_IRQHandler
+  523 00000026         QPRC2_IRQHandler
+
+
+
+ARM Macro Assembler    Page 13 
+
+
+  524 00000026         QPRC3_IRQHandler
+  525 00000026         BT8_IRQHandler
+  526 00000026         BT9_IRQHandler
+  527 00000026         BT10_IRQHandler
+  528 00000026         BT11_IRQHandler
+  529 00000026         BT12_15_IRQHandler
+  530 00000026         MFS8_RX_IRQHandler
+  531 00000026         MFS8_TX_IRQHandler
+  532 00000026         MFS9_RX_IRQHandler
+  533 00000026         MFS9_TX_IRQHandler
+  534 00000026         MFS10_RX_IRQHandler
+  535 00000026         MFS10_TX_IRQHandler
+  536 00000026         MFS11_RX_IRQHandler
+  537 00000026         MFS11_TX_IRQHandler
+  538 00000026         ADC2_IRQHandler
+  539 00000026         DSTC_COMP_IRQHandler
+  540 00000026         USB1_HDMICEC0_IRQHandler
+  541 00000026         USB1_HOST_HDMICEC1_IRQHandler
+  542 00000026         HSSPI_IRQHandler
+  543 00000026         PRGCRC_I2S_IRQHandler
+  544 00000026         SD_IRQHandler
+  545 00000026         FLASHIF_IRQHandler
+  546 00000026         MFS12_RX_IRQHandler
+  547 00000026         MFS12_TX_IRQHandler
+  548 00000026         MFS13_RX_IRQHandler
+  549 00000026         MFS13_TX_IRQHandler
+  550 00000026         MFS14_RX_IRQHandler
+  551 00000026         MFS14_TX_IRQHandler
+  552 00000026         MFS15_RX_IRQHandler
+  553 00000026         MFS15_TX_IRQHandler
+  554 00000026         Dummy
+  555 00000026         
+  556 00000026         
+  557 00000026 E7FE            B                .
+  558 00000028         
+  559 00000028                 ENDP
+  560 00000028         
+  561 00000028         
+  562 00000028                 ALIGN
+  563 00000028         
+  564 00000028         
+  565 00000028         ; User Initial Stack & Heap
+  566 00000028         
+  567 00000028                 IF               :DEF:__MICROLIB
+  574 00000028         
+  575 00000028                 IMPORT           __use_two_region_memory
+  576 00000028                 EXPORT           __user_initial_stackheap
+  577 00000028         __user_initial_stackheap
+  578 00000028         
+  579 00000028 4805            LDR              R0, = Heap_Mem
+  580 0000002A 4906            LDR              R1, = (Stack_Mem + Stack_Size)
+  581 0000002C 4A04            LDR              R2, = (Heap_Mem + Heap_Size)
+  582 0000002E 4B06            LDR              R3, = Stack_Mem
+  583 00000030 4770            BX               LR
+  584 00000032         
+  585 00000032 00 00           ALIGN
+  586 00000034         
+  587 00000034                 ENDIF
+  588 00000034         
+
+
+
+ARM Macro Assembler    Page 14 
+
+
+  589 00000034         
+  590 00000034                 END
+              E000ED88 
+              00000000 
+              00000000 
+              00000000 
+              00000200 
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\obj\startup_s6e2cc.d -o.\obj\startup_s6e2cc.o -I.\RTE\Device\
+S6E2CCAJ0A -I.\RTE\_S6E2CC -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include 
+-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC --predefine="__E
+VAL SETA 1" --predefine="__UVISION_VERSION SETA 524" --predefine="_RTE_ SETA 1"
+ --predefine="S6E2CCAJ0A SETA 1" --list=.\lst\startup_s6e2cc.lst RTE\Device\S6E
+2CCAJ0A\startup_s6e2cc.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+STACK 00000000
+
+Symbol: STACK
+   Definitions
+      At line 47 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      None
+Comment: STACK unused
+Stack_Mem 00000000
+
+Symbol: Stack_Mem
+   Definitions
+      At line 48 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 580 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 582 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+__initial_sp 00000200
+
+Symbol: __initial_sp
+   Definitions
+      At line 49 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 74 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+Comment: __initial_sp used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+HEAP 00000000
+
+Symbol: HEAP
+   Definitions
+      At line 57 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      None
+Comment: HEAP unused
+Heap_Mem 00000000
+
+Symbol: Heap_Mem
+   Definitions
+      At line 59 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 579 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 581 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+__heap_base 00000000
+
+Symbol: __heap_base
+   Definitions
+      At line 58 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      None
+Comment: __heap_base unused
+__heap_limit 00000000
+
+Symbol: __heap_limit
+   Definitions
+      At line 60 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      None
+Comment: __heap_limit unused
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 69 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 74 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 70 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 226 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+__Vectors_End 00000240
+
+Symbol: __Vectors_End
+   Definitions
+      At line 224 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 71 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 226 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 228 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      None
+Comment: .text unused
+ADC0_IRQHandler 00000026
+
+Symbol: ADC0_IRQHandler
+   Definitions
+      At line 503 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 172 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 372 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+ADC1_IRQHandler 00000026
+
+Symbol: ADC1_IRQHandler
+   Definitions
+      At line 504 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 173 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 373 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+ADC2_IRQHandler 00000026
+
+Symbol: ADC2_IRQHandler
+   Definitions
+      At line 538 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 207 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 407 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT0_IRQHandler 00000026
+
+Symbol: BT0_IRQHandler
+   Definitions
+      At line 466 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 135 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 335 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT10_IRQHandler 00000026
+
+Symbol: BT10_IRQHandler
+   Definitions
+      At line 527 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 196 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 396 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT11_IRQHandler 00000026
+
+Symbol: BT11_IRQHandler
+   Definitions
+      At line 528 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 197 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 397 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT12_15_IRQHandler 00000026
+
+Symbol: BT12_15_IRQHandler
+   Definitions
+      At line 529 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 198 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 398 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT1_IRQHandler 00000026
+
+Symbol: BT1_IRQHandler
+   Definitions
+      At line 467 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 136 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 336 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT2_IRQHandler 00000026
+
+Symbol: BT2_IRQHandler
+   Definitions
+      At line 468 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 137 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 337 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT3_IRQHandler 00000026
+
+Symbol: BT3_IRQHandler
+   Definitions
+      At line 469 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 138 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 338 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT4_IRQHandler 00000026
+
+Symbol: BT4_IRQHandler
+   Definitions
+      At line 470 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 139 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 339 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT5_IRQHandler 00000026
+
+Symbol: BT5_IRQHandler
+   Definitions
+      At line 471 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 140 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 340 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT6_IRQHandler 00000026
+
+
+
+
+ARM Macro Assembler    Page 3 Alphabetic symbol ordering
+Relocatable symbols
+
+Symbol: BT6_IRQHandler
+   Definitions
+      At line 472 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 141 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 341 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT7_IRQHandler 00000026
+
+Symbol: BT7_IRQHandler
+   Definitions
+      At line 473 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 142 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 342 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT8_IRQHandler 00000026
+
+Symbol: BT8_IRQHandler
+   Definitions
+      At line 525 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 194 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 394 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BT9_IRQHandler 00000026
+
+Symbol: BT9_IRQHandler
+   Definitions
+      At line 526 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 195 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 395 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+BusFault_Handler 0000001A
+
+Symbol: BusFault_Handler
+   Definitions
+      At line 267 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 79 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 268 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+CAN0_IRQHandler 00000026
+
+Symbol: CAN0_IRQHandler
+   Definitions
+      At line 507 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 176 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 376 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+CAN1_CANFD_IRQHandler 00000026
+
+Symbol: CAN1_CANFD_IRQHandler
+   Definitions
+      At line 508 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 177 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+
+
+ARM Macro Assembler    Page 4 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 377 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+CSV_IRQHandler 00000026
+
+Symbol: CSV_IRQHandler
+   Definitions
+      At line 427 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 96 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 296 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+DMAC0_IRQHandler 00000026
+
+Symbol: DMAC0_IRQHandler
+   Definitions
+      At line 510 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 179 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 379 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+DMAC1_IRQHandler 00000026
+
+Symbol: DMAC1_IRQHandler
+   Definitions
+      At line 511 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 180 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 380 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+DMAC2_IRQHandler 00000026
+
+Symbol: DMAC2_IRQHandler
+   Definitions
+      At line 512 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 181 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 381 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+DMAC3_IRQHandler 00000026
+
+Symbol: DMAC3_IRQHandler
+   Definitions
+      At line 513 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 182 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 382 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+DMAC4_IRQHandler 00000026
+
+Symbol: DMAC4_IRQHandler
+   Definitions
+      At line 514 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 183 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 383 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+DMAC5_IRQHandler 00000026
+
+Symbol: DMAC5_IRQHandler
+
+
+
+ARM Macro Assembler    Page 5 Alphabetic symbol ordering
+Relocatable symbols
+
+   Definitions
+      At line 515 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 184 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 384 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+DMAC6_IRQHandler 00000026
+
+Symbol: DMAC6_IRQHandler
+   Definitions
+      At line 516 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 185 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 385 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+DMAC7_IRQHandler 00000026
+
+Symbol: DMAC7_IRQHandler
+   Definitions
+      At line 517 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 186 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 386 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+DSTC_COMP_IRQHandler 00000026
+
+Symbol: DSTC_COMP_IRQHandler
+   Definitions
+      At line 539 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 208 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 408 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+DSTC_IRQHandler 00000026
+
+Symbol: DSTC_IRQHandler
+   Definitions
+      At line 518 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 187 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 387 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+DT1_2_IRAHandler 00000026
+
+Symbol: DT1_2_IRAHandler
+   Definitions
+      At line 474 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 143 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 343 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+DebugMon_Handler 00000020
+
+Symbol: DebugMon_Handler
+   Definitions
+      At line 281 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 86 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 282 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+
+
+ARM Macro Assembler    Page 6 Alphabetic symbol ordering
+Relocatable symbols
+
+
+Default_Handler 00000026
+
+Symbol: Default_Handler
+   Definitions
+      At line 294 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      None
+Comment: Default_Handler unused
+Dummy 00000026
+
+Symbol: Dummy
+   Definitions
+      At line 554 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 212 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 423 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+ETHER0_IRQHandler 00000026
+
+Symbol: ETHER0_IRQHandler
+   Definitions
+      At line 509 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 178 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 378 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXINT0_IRQHandler 00000026
+
+Symbol: EXINT0_IRQHandler
+   Definitions
+      At line 438 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 107 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 307 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXINT16_17_18_19_IRQHandler 00000026
+
+Symbol: EXINT16_17_18_19_IRQHandler
+   Definitions
+      At line 519 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 188 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 388 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXINT1_IRQHandler 00000026
+
+Symbol: EXINT1_IRQHandler
+   Definitions
+      At line 439 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 108 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 308 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXINT20_21_22_23_IRQHandler 00000026
+
+Symbol: EXINT20_21_22_23_IRQHandler
+   Definitions
+      At line 520 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+
+
+ARM Macro Assembler    Page 7 Alphabetic symbol ordering
+Relocatable symbols
+
+   Uses
+      At line 189 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 389 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXINT24_25_26_27_IRQHandler 00000026
+
+Symbol: EXINT24_25_26_27_IRQHandler
+   Definitions
+      At line 521 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 190 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 390 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXINT28_29_30_31_IRQHandler 00000026
+
+Symbol: EXINT28_29_30_31_IRQHandler
+   Definitions
+      At line 522 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 191 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 391 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXINT2_IRQHandler 00000026
+
+Symbol: EXINT2_IRQHandler
+   Definitions
+      At line 440 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 109 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 309 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXINT3_IRQHandler 00000026
+
+Symbol: EXINT3_IRQHandler
+   Definitions
+      At line 441 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 110 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 310 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXINT4_IRQHandler 00000026
+
+Symbol: EXINT4_IRQHandler
+   Definitions
+      At line 442 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 111 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 311 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXINT5_IRQHandler 00000026
+
+Symbol: EXINT5_IRQHandler
+   Definitions
+      At line 443 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 112 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 312 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXINT6_IRQHandler 00000026
+
+
+
+ARM Macro Assembler    Page 8 Alphabetic symbol ordering
+Relocatable symbols
+
+
+Symbol: EXINT6_IRQHandler
+   Definitions
+      At line 444 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 113 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 313 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXINT7_IRQHandler 00000026
+
+Symbol: EXINT7_IRQHandler
+   Definitions
+      At line 445 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 114 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 314 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXTBUS_ERR_Handler 00000026
+
+Symbol: EXTBUS_ERR_Handler
+   Definitions
+      At line 476 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 145 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 345 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXTINT10_IRQHandler 00000026
+
+Symbol: EXTINT10_IRQHandler
+   Definitions
+      At line 480 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 149 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 349 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXTINT11_IRQHandler 00000026
+
+Symbol: EXTINT11_IRQHandler
+   Definitions
+      At line 481 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 150 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 350 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXTINT12_IRQHandler 00000026
+
+Symbol: EXTINT12_IRQHandler
+   Definitions
+      At line 482 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 151 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 351 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXTINT13_IRQHandler 00000026
+
+Symbol: EXTINT13_IRQHandler
+   Definitions
+      At line 483 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+
+
+
+ARM Macro Assembler    Page 9 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 152 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 352 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXTINT14_IRQHandler 00000026
+
+Symbol: EXTINT14_IRQHandler
+   Definitions
+      At line 484 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 153 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 353 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXTINT15_IRQHandler 00000026
+
+Symbol: EXTINT15_IRQHandler
+   Definitions
+      At line 485 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 154 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 354 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXTINT8_IRQHandler 00000026
+
+Symbol: EXTINT8_IRQHandler
+   Definitions
+      At line 478 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 147 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 347 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+EXTINT9_IRQHandler 00000026
+
+Symbol: EXTINT9_IRQHandler
+   Definitions
+      At line 479 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 148 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 348 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+FLASHIF_IRQHandler 00000026
+
+Symbol: FLASHIF_IRQHandler
+   Definitions
+      At line 545 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 215 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 414 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+FRT0_PEAK_IRQHandler 00000026
+
+Symbol: FRT0_PEAK_IRQHandler
+   Definitions
+      At line 451 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 120 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 320 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+FRT0_ZERO_IRQHandler 00000026
+
+
+
+
+ARM Macro Assembler    Page 10 Alphabetic symbol ordering
+Relocatable symbols
+
+Symbol: FRT0_ZERO_IRQHandler
+   Definitions
+      At line 452 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 121 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 321 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+FRT1_PEAK_IRQHandler 00000026
+
+Symbol: FRT1_PEAK_IRQHandler
+   Definitions
+      At line 455 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 124 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 324 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+FRT1_ZERO_IRQHandler 00000026
+
+Symbol: FRT1_ZERO_IRQHandler
+   Definitions
+      At line 456 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 125 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 325 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+FRT2_PEAK_IRQHandler 00000026
+
+Symbol: FRT2_PEAK_IRQHandler
+   Definitions
+      At line 459 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 128 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 328 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+FRT2_ZERO_IRQHandler 00000026
+
+Symbol: FRT2_ZERO_IRQHandler
+   Definitions
+      At line 460 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 129 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 329 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+HSSPI_IRQHandler 00000026
+
+Symbol: HSSPI_IRQHandler
+   Definitions
+      At line 542 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 211 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 411 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+HardFault_Handler 00000016
+
+Symbol: HardFault_Handler
+   Definitions
+      At line 257 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 77 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+
+
+ARM Macro Assembler    Page 11 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 258 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+ICU0_IRQHandler 00000026
+
+Symbol: ICU0_IRQHandler
+   Definitions
+      At line 453 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 122 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 322 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+ICU1_IRQHandler 00000026
+
+Symbol: ICU1_IRQHandler
+   Definitions
+      At line 457 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 126 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 326 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+ICU2_IRQHandler 00000026
+
+Symbol: ICU2_IRQHandler
+   Definitions
+      At line 461 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 130 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 330 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+IRQ003SEL_IRQHandler 00000026
+
+Symbol: IRQ003SEL_IRQHandler
+   Definitions
+      At line 430 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 99 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 299 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+IRQ004SEL_IRQHandler 00000026
+
+Symbol: IRQ004SEL_IRQHandler
+   Definitions
+      At line 431 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 100 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 300 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+IRQ005SEL_IRQHandler 00000026
+
+Symbol: IRQ005SEL_IRQHandler
+   Definitions
+      At line 432 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 101 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 301 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+IRQ006SEL_IRQHandler 00000026
+
+Symbol: IRQ006SEL_IRQHandler
+
+
+
+ARM Macro Assembler    Page 12 Alphabetic symbol ordering
+Relocatable symbols
+
+   Definitions
+      At line 433 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 102 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 302 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+IRQ007SEL_IRQHandler 00000026
+
+Symbol: IRQ007SEL_IRQHandler
+   Definitions
+      At line 434 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 103 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 303 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+IRQ008SEL_IRQHandler 00000026
+
+Symbol: IRQ008SEL_IRQHandler
+   Definitions
+      At line 435 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 104 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 304 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+IRQ009SEL_IRQHandler 00000026
+
+Symbol: IRQ009SEL_IRQHandler
+   Definitions
+      At line 436 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 105 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 305 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+IRQ010SEL_IRQHandler 00000026
+
+Symbol: IRQ010SEL_IRQHandler
+   Definitions
+      At line 437 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 106 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 306 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+LVD_IRQHandler 00000026
+
+Symbol: LVD_IRQHandler
+   Definitions
+      At line 429 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 98 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 298 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS0_RX_IRQHandler 00000026
+
+Symbol: MFS0_RX_IRQHandler
+   Definitions
+      At line 487 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 156 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 356 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+
+
+ARM Macro Assembler    Page 13 Alphabetic symbol ordering
+Relocatable symbols
+
+
+MFS0_TX_IRQHandler 00000026
+
+Symbol: MFS0_TX_IRQHandler
+   Definitions
+      At line 488 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 157 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 357 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS10_RX_IRQHandler 00000026
+
+Symbol: MFS10_RX_IRQHandler
+   Definitions
+      At line 534 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 203 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 403 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS10_TX_IRQHandler 00000026
+
+Symbol: MFS10_TX_IRQHandler
+   Definitions
+      At line 535 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 204 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 404 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS11_RX_IRQHandler 00000026
+
+Symbol: MFS11_RX_IRQHandler
+   Definitions
+      At line 536 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 205 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 405 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS11_TX_IRQHandler 00000026
+
+Symbol: MFS11_TX_IRQHandler
+   Definitions
+      At line 537 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 206 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 406 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS12_RX_IRQHandler 00000026
+
+Symbol: MFS12_RX_IRQHandler
+   Definitions
+      At line 546 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 216 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 415 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS12_TX_IRQHandler 00000026
+
+Symbol: MFS12_TX_IRQHandler
+   Definitions
+
+
+
+ARM Macro Assembler    Page 14 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 547 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 217 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 416 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS13_RX_IRQHandler 00000026
+
+Symbol: MFS13_RX_IRQHandler
+   Definitions
+      At line 548 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 218 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 417 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS13_TX_IRQHandler 00000026
+
+Symbol: MFS13_TX_IRQHandler
+   Definitions
+      At line 549 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 219 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 418 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS14_RX_IRQHandler 00000026
+
+Symbol: MFS14_RX_IRQHandler
+   Definitions
+      At line 550 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 220 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 419 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS14_TX_IRQHandler 00000026
+
+Symbol: MFS14_TX_IRQHandler
+   Definitions
+      At line 551 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 221 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 420 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS15_RX_IRQHandler 00000026
+
+Symbol: MFS15_RX_IRQHandler
+   Definitions
+      At line 552 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 222 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 421 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS15_TX_IRQHandler 00000026
+
+Symbol: MFS15_TX_IRQHandler
+   Definitions
+      At line 553 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 223 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 422 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+
+
+
+ARM Macro Assembler    Page 15 Alphabetic symbol ordering
+Relocatable symbols
+
+MFS1_RX_IRQHandler 00000026
+
+Symbol: MFS1_RX_IRQHandler
+   Definitions
+      At line 489 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 158 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 358 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS1_TX_IRQHandler 00000026
+
+Symbol: MFS1_TX_IRQHandler
+   Definitions
+      At line 490 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 159 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 359 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS2_RX_IRQHandler 00000026
+
+Symbol: MFS2_RX_IRQHandler
+   Definitions
+      At line 491 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 160 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 360 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS2_TX_IRQHandler 00000026
+
+Symbol: MFS2_TX_IRQHandler
+   Definitions
+      At line 492 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 161 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 361 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS3_RX_IRQHandler 00000026
+
+Symbol: MFS3_RX_IRQHandler
+   Definitions
+      At line 493 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 162 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 362 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS3_TX_IRQHandler 00000026
+
+Symbol: MFS3_TX_IRQHandler
+   Definitions
+      At line 494 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 163 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 363 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS4_RX_IRQHandler 00000026
+
+Symbol: MFS4_RX_IRQHandler
+   Definitions
+      At line 495 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+
+
+ARM Macro Assembler    Page 16 Alphabetic symbol ordering
+Relocatable symbols
+
+   Uses
+      At line 164 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 364 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS4_TX_IRQHandler 00000026
+
+Symbol: MFS4_TX_IRQHandler
+   Definitions
+      At line 496 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 165 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 365 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS5_RX_IRQHandler 00000026
+
+Symbol: MFS5_RX_IRQHandler
+   Definitions
+      At line 497 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 166 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 366 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS5_TX_IRQHandler 00000026
+
+Symbol: MFS5_TX_IRQHandler
+   Definitions
+      At line 498 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 167 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 367 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS6_RX_IRQHandler 00000026
+
+Symbol: MFS6_RX_IRQHandler
+   Definitions
+      At line 499 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 168 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 368 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS6_TX_IRQHandler 00000026
+
+Symbol: MFS6_TX_IRQHandler
+   Definitions
+      At line 500 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 169 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 369 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS7_RX_IRQHandler 00000026
+
+Symbol: MFS7_RX_IRQHandler
+   Definitions
+      At line 501 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 170 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 370 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS7_TX_IRQHandler 00000026
+
+
+
+ARM Macro Assembler    Page 17 Alphabetic symbol ordering
+Relocatable symbols
+
+
+Symbol: MFS7_TX_IRQHandler
+   Definitions
+      At line 502 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 171 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 371 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS8_RX_IRQHandler 00000026
+
+Symbol: MFS8_RX_IRQHandler
+   Definitions
+      At line 530 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 199 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 399 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS8_TX_IRQHandler 00000026
+
+Symbol: MFS8_TX_IRQHandler
+   Definitions
+      At line 531 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 200 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 400 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS9_RX_IRQHandler 00000026
+
+Symbol: MFS9_RX_IRQHandler
+   Definitions
+      At line 532 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 201 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 401 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MFS9_TX_IRQHandler 00000026
+
+Symbol: MFS9_TX_IRQHandler
+   Definitions
+      At line 533 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 202 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 402 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+MemManage_Handler 00000018
+
+Symbol: MemManage_Handler
+   Definitions
+      At line 262 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 78 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 263 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+NMI_Handler 00000014
+
+Symbol: NMI_Handler
+   Definitions
+      At line 252 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+
+
+
+ARM Macro Assembler    Page 18 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 76 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 253 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+OCU0_IRQHandler 00000026
+
+Symbol: OCU0_IRQHandler
+   Definitions
+      At line 454 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 123 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 323 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+OCU1_IRQHandler 00000026
+
+Symbol: OCU1_IRQHandler
+   Definitions
+      At line 458 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 127 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 327 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+OCU2_IRQHandler 00000026
+
+Symbol: OCU2_IRQHandler
+   Definitions
+      At line 462 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 131 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 331 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+PPG00_02_04_IRQHandler 00000026
+
+Symbol: PPG00_02_04_IRQHandler
+   Definitions
+      At line 463 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 132 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 332 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+PPG08_10_12_IRQHandler 00000026
+
+Symbol: PPG08_10_12_IRQHandler
+   Definitions
+      At line 464 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 133 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 333 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+PPG16_18_20_IRQHandler 00000026
+
+Symbol: PPG16_18_20_IRQHandler
+   Definitions
+      At line 465 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 134 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 334 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+PRGCRC_I2S_IRQHandler 00000026
+
+
+
+
+ARM Macro Assembler    Page 19 Alphabetic symbol ordering
+Relocatable symbols
+
+Symbol: PRGCRC_I2S_IRQHandler
+   Definitions
+      At line 543 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 213 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 412 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+PendSV_Handler 00000022
+
+Symbol: PendSV_Handler
+   Definitions
+      At line 285 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 88 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 286 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+QPRC0_IRQHandler 00000026
+
+Symbol: QPRC0_IRQHandler
+   Definitions
+      At line 446 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 115 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 315 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+QPRC1_IRQHandler 00000026
+
+Symbol: QPRC1_IRQHandler
+   Definitions
+      At line 447 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 116 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 316 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+QPRC2_IRQHandler 00000026
+
+Symbol: QPRC2_IRQHandler
+   Definitions
+      At line 523 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 192 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 392 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+QPRC3_IRQHandler 00000026
+
+Symbol: QPRC3_IRQHandler
+   Definitions
+      At line 524 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 193 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 393 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+RTC_IRQHandler 00000026
+
+Symbol: RTC_IRQHandler
+   Definitions
+      At line 477 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 146 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+
+
+ARM Macro Assembler    Page 20 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 346 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 233 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 75 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 234 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+SD_IRQHandler 00000026
+
+Symbol: SD_IRQHandler
+   Definitions
+      At line 544 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 214 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 413 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+SVC_Handler 0000001E
+
+Symbol: SVC_Handler
+   Definitions
+      At line 276 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 85 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 277 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+SWDT_IRQHandler 00000026
+
+Symbol: SWDT_IRQHandler
+   Definitions
+      At line 428 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 97 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 297 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+SysTick_Handler 00000024
+
+Symbol: SysTick_Handler
+   Definitions
+      At line 289 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 89 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 290 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+TIM_IRQHandler 00000026
+
+Symbol: TIM_IRQHandler
+   Definitions
+      At line 486 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 155 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 355 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+USB0_HOST_IRQHandler 00000026
+
+Symbol: USB0_HOST_IRQHandler
+
+
+
+ARM Macro Assembler    Page 21 Alphabetic symbol ordering
+Relocatable symbols
+
+   Definitions
+      At line 506 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 175 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 375 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+USB0_IRQHandler 00000026
+
+Symbol: USB0_IRQHandler
+   Definitions
+      At line 505 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 174 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 374 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+USB1_HDMICEC0_IRQHandler 00000026
+
+Symbol: USB1_HDMICEC0_IRQHandler
+   Definitions
+      At line 540 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 209 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 409 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+USB1_HOST_HDMICEC1_IRQHandler 00000026
+
+Symbol: USB1_HOST_HDMICEC1_IRQHandler
+   Definitions
+      At line 541 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 210 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 410 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+UsageFault_Handler 0000001C
+
+Symbol: UsageFault_Handler
+   Definitions
+      At line 272 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 80 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 273 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+WC_IRQHandler 00000026
+
+Symbol: WC_IRQHandler
+   Definitions
+      At line 475 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 144 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 344 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+WFG0_DTIF0_IRQHandler 00000026
+
+Symbol: WFG0_DTIF0_IRQHandler
+   Definitions
+      At line 448 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 117 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 317 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+
+
+ARM Macro Assembler    Page 22 Alphabetic symbol ordering
+Relocatable symbols
+
+
+WFG1_DTIF1_IRQHandler 00000026
+
+Symbol: WFG1_DTIF1_IRQHandler
+   Definitions
+      At line 449 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 118 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 318 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+WFG2_DTIF2_IRQHandler 00000026
+
+Symbol: WFG2_DTIF2_IRQHandler
+   Definitions
+      At line 450 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 119 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 319 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+__user_initial_stackheap 00000028
+
+Symbol: __user_initial_stackheap
+   Definitions
+      At line 577 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 576 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+Comment: __user_initial_stackheap used once
+141 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+Heap_Size 00000000
+
+Symbol: Heap_Size
+   Definitions
+      At line 55 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 59 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 581 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+Stack_Size 00000200
+
+Symbol: Stack_Size
+   Definitions
+      At line 45 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 48 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+      At line 580 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+
+__Vectors_Size 00000240
+
+Symbol: __Vectors_Size
+   Definitions
+      At line 226 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 72 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+Comment: __Vectors_Size used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+SystemInit 00000000
+
+Symbol: SystemInit
+   Definitions
+      At line 235 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 243 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+Comment: SystemInit used once
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 236 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      At line 245 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+Comment: __main used once
+__use_two_region_memory 00000000
+
+Symbol: __use_two_region_memory
+   Definitions
+      At line 575 in file RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s
+   Uses
+      None
+Comment: __use_two_region_memory unused
+3 symbols
+496 symbols in table

@@ -1,0 +1,137 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.24.2.0
+Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Vincent Claes, PXL, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.24.1
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 5 (build 528)
+Assembler:       Armasm.exe V5.06 update 5 (build 528)
+Linker/Locator:  ArmLink.exe V5.06 update 5 (build 528)
+Library Manager: ArmAr.exe V5.06 update 5 (build 528)
+Hex Converter:   FromElf.exe V5.06 update 5 (build 528)
+CPU DLL:         SARMCM3.DLL V5.24.1
+Dialog DLL:      DCM.DLL V1.16.0.0
+Target DLL:      CMSIS_AGDI.dll V1.28.3.0
+Dialog DLL:      TCM.DLL V1.32.0.0
+ 
+<h2>Project:</h2>
+C:\Users\20002890\Documents\GitHub\SignaalAnalyse\Cypress_FM4\CypressFM4_Audio_DSP_PXL\PDL_DSPANDRGB\StartPointDSPANDRGB.uvprojx
+Project File Date:  03/12/2018
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'S6E2CC'
+assembling startup_s6e2cc.s...
+compiling pdl.c...
+..\..\..\..\..\..\OneDrive - PXL\Hogeschool PXL\Onderwijs\2017-2018\SignaalAnalyse\PDL\2.1.0\drivers\pdl.h(154): error:  #35: #error directive: unknown FM_GENERAL_MCUHEADER_VERSION configuration
+      #error unknown FM_GENERAL_MCUHEADER_VERSION configuration
+src\pdl.c: 0 warnings, 1 error
+compiling system_s6e2cc.c...
+compiling main.c...
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(96): error:  #2571: invalid redefinition of enum "IRQn"  (declared at line 373 of "src\s6e2ccxj.h")
+  typedef enum IRQn
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(98): error:  #101: "NMI_IRQn" has already been declared in the current scope
+      NMI_IRQn          = -14, /*  2 Non Maskable      */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(99): error:  #101: "HardFault_IRQn" has already been declared in the current scope
+      HardFault_IRQn    = -13, /*  3 Hard Fault        */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(100): error:  #101: "MemManage_IRQn" has already been declared in the current scope
+      MemManage_IRQn    = -12, /*  4 Memory Management */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(101): error:  #101: "BusFault_IRQn" has already been declared in the current scope
+      BusFault_IRQn     = -11, /*  5 Bus Fault         */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(102): error:  #101: "UsageFault_IRQn" has already been declared in the current scope
+      UsageFault_IRQn   = -10, /*  6 Usage Fault       */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(103): error:  #101: "SVC_IRQn" has already been declared in the current scope
+      SVC_IRQn          = -5,  /* 11 SV Call           */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(104): error:  #101: "DebugMonitor_IRQn" has already been declared in the current scope
+      DebugMonitor_IRQn = -4,  /* 12 Debug Monitor     */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(105): error:  #101: "PendSV_IRQn" has already been declared in the current scope
+      PendSV_IRQn       = -2,  /* 14 Pend SV           */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(106): error:  #101: "SysTick_IRQn" has already been declared in the current scope
+      SysTick_IRQn      = -1,  /* 15 System Tick       */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(108): error:  #101: "CSV_IRQn" has already been declared in the current scope
+      CSV_IRQn              =   0,  /* Clock Supervisor                             */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(109): error:  #101: "SWDT_IRQn" has already been declared in the current scope
+      SWDT_IRQn             =   1,  /* Software Watchdog Timer                      */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(110): error:  #101: "LVD_IRQn" has already been declared in the current scope
+      LVD_IRQn              =   2,  /* Low Voltage Detection                        */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(111): error:  #101: "IRQ003SEL_IRQn" has already been declared in the current scope
+      IRQ003SEL_IRQn        =   3,  /* Interrupt Selection IRQ003SEL                */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(112): error:  #101: "IRQ004SEL_IRQn" has already been declared in the current scope
+      IRQ004SEL_IRQn        =   4,  /* Interrupt Selection IRQ004SEL                */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(113): error:  #101: "IRQ005SEL_IRQn" has already been declared in the current scope
+      IRQ005SEL_IRQn        =   5,  /* Interrupt Selection IRQ005SEL                */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(114): error:  #101: "IRQ006SEL_IRQn" has already been declared in the current scope
+      IRQ006SEL_IRQn        =   6,  /* Interrupt Selection IRQ006SEL                */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(115): error:  #101: "IRQ007SEL_IRQn" has already been declared in the current scope
+      IRQ007SEL_IRQn        =   7,  /* Interrupt Selection IRQ007SEL                */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(116): error:  #101: "IRQ008SEL_IRQn" has already been declared in the current scope
+      IRQ008SEL_IRQn        =   8,  /* Interrupt Selection IRQ008SEL                */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(117): error:  #101: "IRQ009SEL_IRQn" has already been declared in the current scope
+      IRQ009SEL_IRQn        =   9,  /* Interrupt Selection IRQ009SEL                */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(118): error:  #101: "IRQ010SEL_IRQn" has already been declared in the current scope
+      IRQ010SEL_IRQn        =  10,  /* Interrupt Selection IRQ010SEL                */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(119): error:  #101: "EXINT0_IRQn" has already been declared in the current scope
+      EXINT0_IRQn           =  11,  /* External Interrupt Ch. 0                     */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(120): error:  #101: "EXINT1_IRQn" has already been declared in the current scope
+      EXINT1_IRQn           =  12,  /* External Interrupt Ch. 1                     */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(121): error:  #101: "EXINT2_IRQn" has already been declared in the current scope
+      EXINT2_IRQn           =  13,  /* External Interrupt Ch. 2                     */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(122): error:  #101: "EXINT3_IRQn" has already been declared in the current scope
+      EXINT3_IRQn           =  14,  /* External Interrupt Ch. 3                     */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(123): error:  #101: "EXINT4_IRQn" has already been declared in the current scope
+      EXINT4_IRQn           =  15,  /* External Interrupt Ch. 4                     */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(124): error:  #101: "EXINT5_IRQn" has already been declared in the current scope
+      EXINT5_IRQn           =  16,  /* External Interrupt Ch. 5                     */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(125): error:  #101: "EXINT6_IRQn" has already been declared in the current scope
+      EXINT6_IRQn           =  17,  /* External Interrupt Ch. 6                     */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(126): error:  #101: "EXINT7_IRQn" has already been declared in the current scope
+      EXINT7_IRQn           =  18,  /* External Interrupt Ch. 7                     */
+C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC\s6e2cc.h(127): error:  #101: "QPRC0_IRQn" has already been declared in the current scope
+      QPRC0_IRQn            =  19,  /* Quad Decoder and Revolution Counter Ch. 0    */
+src\main.c: 0 warnings, 30 errors
+".\obj\DSP_AUDIO_PXL.axf" - 31 Error(s), 0 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.3.0.pack
+                ARM.CMSIS.5.3.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: DSP Version: 1.5.2
+   * Component: CORE Version: 5.1.1
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.FM4_DFP.1.4.0.pack
+                Keil.FM4_DFP.1.4.0
+                Spansion FM4 Series Device Support
+   * Component: Startup Version: 1.0.0
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\Device\S6E2CCAJ0A
+  .\RTE\_S6E2CC
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include
+  C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.4.0\Device\Include\S6E2CC
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: Keil::Device:Startup:1.0.0
+      Source file:   Device\Source\S6E2CC\ARM\startup_s6e2cc.s
+      Source file:   Device\Source\S6E2CC\system_s6e2cc.c
+      Include file:  Device\Source\S6E2CC\system_s6e2cc.h
+
+   * Component: ARM::CMSIS:DSP:1.5.2
+      Include file:  CMSIS\Include\arm_math.h
+      Library file:  CMSIS\Lib\ARM\arm_cortexM4lf_math.lib
+
+   * Component: ARM::CMSIS:CORE:5.1.1
+Target not created.
+Build Time Elapsed:  00:00:22
+</pre>
+</body>
+</html>
