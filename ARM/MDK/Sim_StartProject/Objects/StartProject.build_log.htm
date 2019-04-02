@@ -1,0 +1,99 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.26.2.0
+Copyright (C) 2018 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Vincent Claes, Hogeschool PXL, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.27.1.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.27.1.0
+Dialog DLL:      DCM.DLL V1.17.2.0
+Target DLL:      CMSIS_AGDI.dll V1.31.17.0
+Dialog DLL:      TCM.DLL V1.36.1.0
+ 
+<h2>Project:</h2>
+D:\OneDrive - PXL\Hogeschool PXL\Onderwijs\2018-2019\SignaalAnalyse\StartProject\StartProject.uvprojx
+Project File Date:  04/02/2019
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'Target 1'
+creating preprocessor file for main.c...
+creating preprocessor file for EventRecorder.c...
+assembling startup_s6e2cc.s...
+creating preprocessor file for system_s6e2cc.c...
+compiling main.c...
+main.c(12): warning:  #1-D: last line of file ends without a newline
+  }
+main.c(9): warning:  #550-D: variable "z"  was set but never used
+  	int16_t x=2, y=3, z;
+main.c: 2 warnings, 0 errors
+compiling EventRecorder.c...
+compiling system_s6e2cc.c...
+RTE\Device\S6E2CCAJ0A\system_s6e2cc.c(151): warning:  #177-D: variable "u8IoRegisterRead"  was declared but never referenced
+    static uint8_t u8IoRegisterRead;  // Workaround variable for MISRA C rule conformance
+RTE\Device\S6E2CCAJ0A\system_s6e2cc.c: 1 warning, 0 errors
+linking...
+Program Size: Code=436 RO-data=616 RW-data=0 ZI-data=1832  
+".\Objects\StartProject.axf" - 0 Error(s), 3 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.5.1.pack
+                ARM.CMSIS.5.5.1
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.2.0
+   * Component: DSP Variant: Library Version: 1.6.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.ARM_Compiler.1.6.1.pack
+                Keil.ARM_Compiler.1.6.1
+                Keil ARM Compiler extensions for ARM Compiler 5 and ARM Compiler 6
+   * Component: Event Recorder Variant: DAP Version: 1.4.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.FM4_DFP.1.5.1.pack
+                Keil.FM4_DFP.1.5.1
+                Spansion FM4 Series Device Support
+   * Component: Startup Version: 1.0.0
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\Compiler
+  .\RTE\Device\S6E2CCAJ0A
+  .\RTE\_Target_1
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\DSP\Include
+  C:\Keil_v5\ARM\PACK\Keil\ARM_Compiler\1.6.1\Include
+  C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.2.0
+
+   * Component: ARM::CMSIS:DSP:Library:1.6.0
+      Include file:  CMSIS\DSP\Include\arm_math.h
+      Library file:  CMSIS\DSP\Lib\ARM\arm_cortexM4lf_math.lib
+
+   * Component: Keil.ARM Compiler::Compiler:Event Recorder:DAP:1.4.0
+      Source file:   Source\EventRecorder.c
+      Include file:  Include\EventRecorder.h
+      Include file:  Config\EventRecorderConf.h
+
+   * Component: Keil::Device:Startup:1.0.0
+      Source file:   Device\S6E2CC\Source\ARM\startup_s6e2cc.s
+      Include file:  Device\S6E2CC\Source\system_s6e2cc.h
+      Source file:   Device\S6E2CC\Source\system_s6e2cc.c
+Build Time Elapsed:  00:00:24
+</pre>
+</body>
+</html>

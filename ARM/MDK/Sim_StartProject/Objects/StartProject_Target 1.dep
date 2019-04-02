@@ -1,0 +1,45 @@
+Dependencies for Project 'StartProject', Target 'Target 1': (DO NOT MODIFY !)
+F (.\main.c)(0x5CA35DE3)(--c99 --gnu -c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork --split_sections-I.\RTE\Compiler-I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\DSP\Include-IC:\Keil_v5\ARM\PACK\Keil\ARM_Compiler\1.6.1\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include-D__UVISION_VERSION="526" -D_RTE_ -DS6E2CCAJ0A-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include\s6e2cc.h)(0x570CA85C)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include\mcu.h)(0x570CA85C)
+I (.\RTE\Device\S6E2CCAJ0A\system_s6e2cc.h)(0x5C9E3742)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include\interrupt_type.h)(0x570CA85C)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\core_cm4.h)(0x5C8FB044)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_version.h)(0x5B9776B4)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_compiler.h)(0x5C8FB044)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_armcc.h)(0x5C8FB044)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\mpu_armv7.h)(0x5C8FB044)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\DSP\Include\arm_math.h)(0x5C8FB044)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599F2F9C)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599F2F9E)
+F (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\DSP\Lib\ARM\arm_cortexM4lf_math.lib)(0x5C8BC268)()
+F (C:\Keil_v5\ARM\PACK\Keil\ARM_Compiler\1.6.1\Source\EventRecorder.c)(0x5B8FB2EE)(--c99 --gnu -c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork --split_sections-I.\RTE\Compiler-I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\DSP\Include-IC:\Keil_v5\ARM\PACK\Keil\ARM_Compiler\1.6.1\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include-D__UVISION_VERSION="526" -D_RTE_ -DS6E2CCAJ0A-o .\objects\eventrecorder.o --omf_browse .\objects\eventrecorder.crf --depend .\objects\eventrecorder.d)
+I (.\RTE\_Target_1\RTE_Components.h)(0x5C9E29C1)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include\s6e2cc.h)(0x570CA85C)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include\mcu.h)(0x570CA85C)
+I (.\RTE\Device\S6E2CCAJ0A\system_s6e2cc.h)(0x5C9E3742)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include\interrupt_type.h)(0x570CA85C)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\core_cm4.h)(0x5C8FB044)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_version.h)(0x5B9776B4)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_compiler.h)(0x5C8FB044)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_armcc.h)(0x5C8FB044)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\mpu_armv7.h)(0x5C8FB044)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599F2F9C)
+I (C:\Keil_v5\ARM\PACK\Keil\ARM_Compiler\1.6.1\Include\EventRecorder.h)(0x5B8FB2EE)
+I (.\RTE\Compiler\EventRecorderConf.h)(0x5B62A570)
+F (RTE\Compiler\EventRecorderConf.h)(0x5B62A570)()
+F (RTE\Device\S6E2CCAJ0A\startup_s6e2cc.s)(0x5460864E)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\Compiler-I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\DSP\Include-IC:\Keil_v5\ARM\PACK\Keil\ARM_Compiler\1.6.1\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include--pd "__UVISION_VERSION SETA 526" --pd "_RTE_ SETA 1" --pd "S6E2CCAJ0A SETA 1"--list .\listings\startup_s6e2cc.lst --xref -o .\objects\startup_s6e2cc.o --depend .\objects\startup_s6e2cc.d)
+F (RTE\Device\S6E2CCAJ0A\system_s6e2cc.c)(0x570CA85C)(--c99 --gnu -c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork --split_sections-I.\RTE\Compiler-I.\RTE\Device\S6E2CCAJ0A-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\DSP\Include-IC:\Keil_v5\ARM\PACK\Keil\ARM_Compiler\1.6.1\Include-IC:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include-D__UVISION_VERSION="526" -D_RTE_ -DS6E2CCAJ0A-o .\objects\system_s6e2cc.o --omf_browse .\objects\system_s6e2cc.crf --depend .\objects\system_s6e2cc.d)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include\mcu.h)(0x570CA85C)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include\s6e2cc.h)(0x570CA85C)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\core_cm4.h)(0x5C8FB044)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F2F9E)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_version.h)(0x5B9776B4)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_compiler.h)(0x5C8FB044)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_armcc.h)(0x5C8FB044)
+I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include\mpu_armv7.h)(0x5C8FB044)
+I (.\RTE\Device\S6E2CCAJ0A\system_s6e2cc.h)(0x5C9E3742)
+I (C:\Keil_v5\ARM\PACK\Keil\FM4_DFP\1.5.1\Device\S6E2CC\Include\interrupt_type.h)(0x570CA85C)
+F (RTE\Device\S6E2CCAJ0A\system_s6e2cc.h)(0x5C9E3742)()
